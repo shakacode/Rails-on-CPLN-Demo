@@ -1,0 +1,30 @@
+# Configuration for "Heroku to CPLN playbook" custom scripts
+aliases:
+  common: &common
+    # Org for staging and QA apps is typically set as an alias
+    # Production apps will use a different org than staging for security.
+    # Change this value to your org name
+    # or set ENV value to CPLN_ORG as that will override whatever is used here for all cpl commands
+    # cpln_org: shakacode-open-source-examples
+
+    # Example apps use only location. CPLN offers the ability to use multiple locations.
+    default_location: aws-us-east-2
+    # Configure the workload name used as a template for one-off scripts, like a Heroku one-off dyno.
+    one_off_workload: rails
+    # Like the entries in the Heroku Procfile that get deployed when the application code changes
+    # and the application image updates.
+    app_workloads:
+      - rails
+    # Like Heroku add-ons
+    additional_workloads:
+      - postgres
+
+apps:
+  rails-on-cpln-demo:
+    <<: *common
+  # QA Apps are like Heroku review apps, but the use `prefix` so you can run a commmand like
+  # this to create a QA app for the tutorial app.
+  # `cpl setup gvc postgres redis rails -a qa-tutorial-app-pr-1234`
+  qa-rails-on-cpln-demo:
+    <<: *common
+    prefix: true

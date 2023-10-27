@@ -16,7 +16,6 @@ echo " -- Waiting for services"
 
 # Strip out the host and the port for curl and to keep full resource URL secret
 wait_for_service $(echo $DATABASE_URL | sed -e 's|^.*@||' -e 's|/.*$||')
-wait_for_service $(echo $REDIS_URL | sed -e 's|redis://||' -e 's|/.*$||')
 
 echo " -- Preparing database"
 rails db:prepare
